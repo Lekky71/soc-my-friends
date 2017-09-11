@@ -1,40 +1,42 @@
 package com.socandroid.myfriends;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
     ImageView profileImageView;
-    TextView nameTextView, departTextView, nameOfFriendsTextView;
+    TextView nameTextView, departTextView;
     EditText myNameEditText;
-    TextView cousemateTextView;
     Button changeNameButton;
-    String [] nameOfMyFriends = {"Tayo","Iyanu", "Tope", "Josh","Leke","Nike","Barakat","Nahimat",
-            "Princess","Fortune","Eri","Fatimah","Kenny","Bukky"};
-    String[] nameCourseMates = {"Segun","Daniel","Dami","Samuel","Grace","Nike","Demola","Ayomide"};
+    RecyclerView mRecyclerView;
+    FriendsAdapter friendsAdapter;
+    String [] nameOfMyFriends = {"Tayo","Iyanu","Leke","Nahimat"};
+    int [] friendPictures = {R.mipmap.the_levarage_pic,R.mipmap.ic_launcher,
+            R.mipmap.ic_launcher_round,R.mipmap.the_levarage_pic};
+    ArrayList<Friend> friends;
+    Context myContext;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        myContext = getBaseContext();
+        friends = new ArrayList<>();
         profileImageView = (ImageView) findViewById(R.id.profileImageView);
         nameTextView = (TextView) findViewById(R.id.NameTextView);
         departTextView = (TextView) findViewById(R.id.departmentTextView);
-        nameOfFriendsTextView = (TextView) findViewById(R.id.names_of_friends_text_view);
-        cousemateTextView = (TextView) findViewById(R.id.name_of_course_mates_text_view);
         myNameEditText = (EditText) findViewById(R.id.nameChangeEditText);
         changeNameButton = (Button) findViewById(R.id.change_name_button);
 //        nameTextView.setText("SOC ANDROID");
-        for(int i = 0;i<nameOfMyFriends.length;i++){
-            nameOfFriendsTextView.setText(nameOfFriendsTextView.getText()+ nameOfMyFriends[i]+"\n");
-        }
-        for(int i = 0; i< nameCourseMates.length;i++){
-           cousemateTextView.setText(cousemateTextView.getText()+ nameCourseMates[i] +"\n");
-        }
 
         //what we want the listener to do is to get the text of the EditText and set it to the text of the NameTextView
         changeNameButton.setOnClickListener(new View.OnClickListener() {
@@ -44,5 +46,16 @@ public class MainActivity extends AppCompatActivity {
                 nameTextView.setText(name);
             }
         });
+        for(int i = 0; i<nameOfMyFriends.length;i++){
+            Friend myFriend = new Friend(nameOfMyFriends[i],friendPictures[i]);
+            friends.add(myFriend);
+        }
+        mRecyclerView = (RecyclerView) findViewById(R.id.friends_recycler_view);
+        friendsAdapter = new FriendsAdapter(myContext,friends);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setAutoMeasureEnabled(true);
+        mRecyclerView.setLayoutManager(layoutManager);
+        mRecyclerView.setAdapter(friendsAdapter);
+
     }
 }

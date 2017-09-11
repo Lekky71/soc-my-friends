@@ -57,28 +57,15 @@
         android:layout_width="match_parent"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:background="@color/colorPrimaryDark"
         android:layout_height="wrap_content"
         android:layout_below="@id/profileImageView"
         android:layout_marginTop="20dp"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/names_of_friends_text_view"
+        <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
-            android:gravity="center"
-            android:layout_margin="20dp"
-            android:textColor="@color/colorYellow"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:id="@+id/name_of_course_mates_text_view"
-            android:layout_width="match_parent"
-            android:layout_margin="10dp"
-            android:fontFamily="casual"
-            android:textColor="@color/colorYellow"
-            android:textSize="20sp"
-            android:background="@color/colorBlack"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:id="@+id/friends_recycler_view"/>
 
         <EditText
             android:id="@+id/nameChangeEditText"

@@ -1,6 +1,8 @@
 package com.socandroid.myfriends;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,10 +34,22 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.FriendsV
 
     @Override //What this does is to read each index of the arraylist and attach it to the place holder
     public void onBindViewHolder(FriendsViewHolder holder, int position) {
-        String friendName = myFriends.get(position).getName();
-        int picture = myFriends.get(position).getPictureDrawable();
+        final String friendName = myFriends.get(position).getName();
+        final int picture = myFriends.get(position).getPictureDrawable();
         holder.friendImageView.setImageResource(picture);
         holder.friendNameTextView.setText(friendName);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext,DetailActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                Bundle bundle = new Bundle();
+                bundle.putString("name",friendName);
+                bundle.putInt("picture",picture);
+                intent.putExtra("bundle",bundle);
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     @Override
